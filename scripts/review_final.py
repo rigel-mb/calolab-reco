@@ -158,7 +158,7 @@ def review(run, freeze_path, validation_path, output):
         ax.grid(axis="y", alpha=0.2)
     fig.suptitle(
         "Keep all events: seven misplaced anchors in the primary test draw\n"
-        "A smaller median does not remove these rare failures",
+        "Better reconstruction does not fix wrong-window selections",
         fontsize=11,
     )
     fig.savefig(output / "tails.png", dpi=150)
@@ -171,9 +171,66 @@ def review(run, freeze_path, validation_path, output):
     )
 
 
+def energy_median_review(run, freeze_path):
+    """Post-hoc descriptive metric check on fixed predictions; never select a model."""
+    summary = json.loads((run / "summary.json").read_text())
+    frozen = json.loads(freeze_path.read_text())
+    if not summary["complete"] or not summary["test_used"]:
+        raise ValueError("Need the completed held-out evaluation")
+    if summary["frozen_protocol_sha256"] != transport.sha(freeze_path):
+        raise ValueError("Frozen protocol fingerprint differs")
+    rows = []
+    common_ids, common_targets = None, None
+    for name, record in summary["records"].items():
+        if record["task"] not in ("energy", "joint"):
+            continue
+        path = run / "predictions" / (name + ".npz")
+        if transport.sha(path) != record["sha256"]:
+            raise ValueError("Prediction fingerprint differs")
+        with np.load(path, allow_pickle=False) as arrays:
+            ids = arrays["source_ids"]
+            targets = arrays["targets"].astype(np.float64)
+            predictions = arrays["predictions"].astype(np.float64)
+        if common_ids is None:
+            common_ids, common_targets = ids.copy(), targets.copy()
+        if not np.array_equal(ids, common_ids) or not np.array_equal(targets, common_targets):
+            raise ValueError("Event ordering or targets differ")
+        if transport.digest(ids.tobytes()) != summary["source_ids_sha256"]:
+            raise ValueError("Test identifiers differ")
+        if len(ids) != frozen["counts"]["test"]:
+            raise ValueError("Test count differs")
+        metrics = data.aggregate_metrics(targets, predictions, record["task"])
+        if metrics != record["metrics"]:
+            raise ValueError("Original metrics do not reproduce")
+        error = np.abs((predictions[:, 0] - targets[:, 0]) / targets[:, 0])
+        rows.append(dict(
+            name=name, family=record["family"], regime=record["regime"],
+            training_seed=record.get("training_seed"), noise_seed=record["noise_seed"],
+            prediction_sha256=record["sha256"],
+            mean_absolute_relative_error_pct=float(error.mean() * 100),
+            median_absolute_relative_error_pct=float(np.median(error) * 100),
+        ))
+    return dict(
+        analysis="Post-hoc energy median, no retraining or model selection",
+        formula="100 * median(abs((prediction - truth) / truth))",
+        count=len(common_ids), frozen_protocol_sha256=transport.sha(freeze_path),
+        source_summary_sha256=transport.sha(run / "summary.json"),
+        source_ids_sha256=summary["source_ids_sha256"], records=rows,
+    )
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    for key in ("run", "freeze", "validation", "output"):
+    for key in ("run", "freeze"):
         p.add_argument("--" + key, type=Path, required=True)
+    for key in ("validation", "output"):
+        p.add_argument("--" + key, type=Path)
+    p.add_argument("--energy-median-only", action="store_true",
+                   help="Print supplementary metrics without rewriting frozen reports")
     a = p.parse_args()
-    review(a.run, a.freeze, a.validation, a.output)
+    if a.energy_median_only:
+        print(json.dumps(energy_median_review(a.run, a.freeze), indent=2, allow_nan=False))
+    else:
+        if a.validation is None or a.output is None:
+            p.error("--validation and --output are required for the full review")
+        review(a.run, a.freeze, a.validation, a.output)

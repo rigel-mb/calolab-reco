@@ -23,6 +23,8 @@ The [36-configuration validation review](../reports/experiments/methodology_revi
 
 Intermediate execution notebooks and dedicated utilities are not all included in this compact checkout. The decision history and aggregate evidence remain public; full earlier execution artifacts are preserved separately. Current code reproduces the selected method.
 
+A supplementary analysis added after test evaluation finds lower median relative energy error after pretraining on all three seeds (1.454% to 1.261% on average), despite the mixed result on mean error. The quadratic reference remains stronger on both seed-average measures. This refines the interpretation without changing the original metric or model selection; details are in the final report.
+
 ## Physical interpretation
 
 

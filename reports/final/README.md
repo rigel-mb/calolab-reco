@@ -1,6 +1,6 @@
 # Final evaluation: a reusable encoder helps position reconstruction
 
-**The held-out test confirms the position benefit of masked pretraining.** The pretrained Transformer reduces mean median-position error by 34.1% against direct training and 51.5% against the periodic reference. Energy is less convincing: the quadratic reference remains best on average.
+**The held-out test confirms the position benefit of masked pretraining.** The pretrained Transformer reduces mean median-position error by 34.1% against direct training and 51.5% against the periodic reference. Energy gains depend on the metric: the quadratic reference remains better on both mean and median error averaged across training seeds.
 
 ## What was frozen and evaluated
 
@@ -42,9 +42,51 @@ Noise worsens absolute reconstruction but changes the relative value of the esti
 
 ![Ordinary tails and rare failures](tails.png)
 
+Left: the 99th percentile is the position error below which 99% of events fall. Right: root mean squared error (RMSE) squares errors before averaging, making it sensitive to a few very large failures. Bars average the three trained-model scores and dots show individual seeds; the reference has no training-seed variation. These are aggregate error summaries, not images of individual showers.
+
 Seven of 5,935 primary-draw events (0.118%) have misplaced anchors and position errors above 10 stored units. Their true energies are 1.059-1.300 GeV: a large positive noise fluctuation can move the selected window away from a weak shower. The repeat draws contain three and four misplaced anchors. All events remain in the metrics.
 
-Pretrained position p99 improves to 0.347-0.379 versus 0.735 for the periodic reference. Yet its RMSE is 0.928-0.932 versus 0.923: rare large failures dominate squared error. The median gain does not solve candidate finding. Nonpositive energy predictions are likewise counted without clipping. Fixed energy-bin, index-boundary and tail results are retained in [results.json](results.json).
+Pretrained position p99 improves to 0.347-0.379 versus 0.735 for the periodic reference. Yet its RMSE is 0.928-0.932 versus 0.923: rare large failures dominate squared error. Better reconstruction within the selected window does not fix cases where that window misses the shower. Nonpositive energy predictions are likewise counted without clipping. Fixed energy-bin, index-boundary and tail results are retained in [results.json](results.json).
+
+
+## Supplementary energy median analysis
+
+This descriptive analysis was added after the test evaluation, on 29 September 2026, to check whether the energy conclusion depends on using a mean. It reuses all 5,935 events and the saved predictions, with no training, refitting, clipping or model selection. The original primary metric remains mean absolute relative error (MARE). The additional metric is `100 * median(abs((prediction - truth) / truth))`, not a signed-error median or a median energy.
+
+| Estimator | Mean absolute relative error (%) | Median absolute relative error (%) |
+| --- | ---: | ---: |
+| Affine calibration | 3.717 | 1.611 |
+| Quadratic calibration | 2.104 | 1.115 |
+| CNN | 4.188 | 2.669 |
+| Direct Transformer | 2.554 | 1.454 |
+| Pretrained Transformer | 2.389 | 1.261 |
+
+Neural entries average three separately calculated model scores. The main noise-plus-cut condition and first test-noise draw are unchanged.
+
+| Training seed | Direct median (%) | Pretrained median (%) | Relative median reduction |
+| --- | ---: | ---: | ---: |
+| 20260925 | 1.416 | 1.354 | 4.4% |
+| 20261001 | 1.519 | 1.128 | 25.8% |
+| 20261002 | 1.426 | 1.301 | 8.8% |
+
+Pretraining improves the energy median on all three training seeds, although mean error improves on only one. This supports a benefit for typical relative error; it does not establish an improvement across the whole error distribution. The quadratic reference has a lower median than all three neural runs on the primary draw. No additional significance claim is made from these point estimates.
+
+| Test-noise draw | Quadratic median (%) | Direct median (%) | Pretrained median (%) |
+| --- | ---: | ---: | ---: |
+| 20261010 | 1.115 | 1.454 | 1.261 |
+| 20261011 | 1.111 | 1.451 | 1.253 |
+| 20261012 | 1.133 | 1.461 | 1.279 |
+
+The median improves against direct training in all nine paired seed/noise comparisons; the quadratic reference remains best in each draw when comparing seed-average scores. These draws reuse the same events and models, so they are not nine independent trainings. Clean and noise-only controls were also checked: the quadratic median remains below the direct CNN and Transformer medians there. No pretrained controls exist for those regimes.
+
+Reproduce this supplementary calculation with the existing final-evaluation run directory (containing `summary.json` and `predictions/`):
+
+```bash
+uv run --locked --extra cpu python scripts/review_final.py \
+  --run "$FINAL_RUN" --freeze configs/final_evaluation.json --energy-median-only
+```
+
+The command prints all 56 energy-bearing records, including controls and references, after checking file hashes, event alignment and the original metrics. It leaves the frozen results and model-selection protocol unchanged.
 
 ## Adaptation time and reuse
 
