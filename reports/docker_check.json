@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-21T17:35:11.699778+00:00",
+  "comparison_passed": true,
+  "split": "validation",
+  "test_used": false,
+  "requested_limit": 256,
+  "count": 256,
+  "checkpoint_sha256": "7d30ac61d0bf62dc49c70ddcc1c4f496009b2ecd381dd1ac8e1c3e05f7f2a0bb",
+  "checkpoint_epoch": 19,
+  "identical_source_ids": true,
+  "source_ids_sha256": "235bb8dcb0eda212ee86fced2f72797fadebe0430c7b0b63fcb5651f067c857d",
+  "provenance": {
+    "stage2_manifest_sha256": "5a23b87f71835c0abefe3c39e59d24f699e21215ab0ac0cf593947ec55d98181",
+    "prepared_manifest_sha256": "abac690f34e6292c4bf0f42af7b02bad3a6653c8dbddfbb71093e3e749a95a06",
+    "prepared_output_sha256": {
+      "deposits.npy": "c350a31748a16765487dd709aecd3134647ec0a894e1fc3f9cf636cec2f68e99",
+      "source_ids.npy": "d90bbc0b4846264d3f5eeecf371039d27ed8ee5d823ada158bbd10cb17f539a4",
+      "split.npy": "9aff508371b07940d7c4e07a960e35f10bfa0b09f917b7595745170727edbdbe",
+      "targets.npy": "a5f1e658493d97121f74ce77f2934e3008c5ddec9dc2ee8fde3ba2887ed03c28"
+    },
+    "data_sha256": {
+      "train.npz": "c7bc1354cecade3583c5f31b2921854f6369c13a99186b9c56f54dc730de0c7c",
+      "validation.npz": "b83399589daefd899980fe71f067423b8daa084a7c6eaa7b84a2ddea446753f4"
+    },
+    "code_sha256": "88954e937b8629cb483dfe2bf915cc5aeaccc3755021c7e1f13b2bb3edbcaa52",
+    "source_files": {
+      "pyproject.toml": "7fb0b77b11ec755f1b7e640a4c3ecc1004bb3c7c238bc17276bb6083c8c77f81",
+      "uv.lock": "317b8d3fd3d11217c30cbd8e9459d81ce94c18081f19caf4383746721dd43070",
+      "configs/cnn.toml": "1f23c5c89372732856fe2cee255515bb2b348b7204c484bfe0aaf0d1f74258e2",
+      "src/calolab_reco/__init__.py": "81b69dd7243d7362180247501ad09a8a47d1b6f628c60557108658c146961f5e",
+      "src/calolab_reco/__main__.py": "b40f3498b0aa07bd4a13d5ef24a9e057aa0059401dd7328ddcb612a2ab6127a3",
+      "src/calolab_reco/baselines.py": "60273d6353fbbc4e3b5683f8bb449fbb4d5ab50a34e0f5b5021154029194873f",
+      "src/calolab_reco/data.py": "a1af8db7274678ccf3b519e18e52b3ca3a8de98727e76caceaf86b3e4964cb22",
+      "src/calolab_reco/metrics.py": "88bbdc4434ccecc3a689fd784b5f83e5ff8c97842b07d2e0e72fa0c39e4f800d",
+      "src/calolab_reco/pilot.py": "d9dd92e64b43175665f255e490487bdb8aca8dcf90a504148913072f9b7b88cd",
+      "src/calolab_reco/pilot_models.py": "69aa192247a2fc18fc1e116949e5ad5d70aea42eaddae816bc35c90229a8397a",
+      "src/calolab_reco/pilot_reporting.py": "b84897441ba8b03bf5b3d319a7fb9996db9c61bc5174c363e5e45ee544a1634c",
+      "src/calolab_reco/stage2_artifacts.py": "b47123c73ece04da89859bc773a93c826715050b5f79bb8ad11dc0054fe2f2ca",
+      "src/calolab_reco/study_reporting.py": "6ca4427f4306e93540c8b5b83d90ee16b0c46be9eeeeeded1deebdfb5ce9e5dd",
+      "src/calolab_reco/training.py": "87cf0035ee1bb85241cc80bda214de10f80e33f9a4b397c30fdc12e2d14d20cd"
+    },
+    "config_sha256": "649feebcf7a11c221d89a7573d759ee33e9bfd5cf8da74d3374913099dd8dbb4"
+  },
+  "docker_version": {
+    "client": {
+      "Version": "29.8.0",
+      "ApiVersion": "1.56",
+      "Os": "darwin",
+      "Arch": "arm64",
+      "GitCommit": "88096ef"
+    },
+    "server": {
+      "Version": "29.8.0",
+      "ApiVersion": "1.56",
+      "MinAPIVersion": "1.40",
+      "Os": "linux",
+      "Arch": "arm64",
+      "GitCommit": "3ce5872"
+    }
+  },
+  "image": {
+    "id": "sha256:4715ae0102246e0efff116614e2286a7f5ba137a4ffbb66458240eceaf330f57",
+    "os": "linux",
+    "architecture": "arm64"
+  },
+  "platform": "linux/arm64",
+  "native_platform": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "python_version": "3.12.14"
+  },
+  "execution": {
+    "build_requested": false,
+    "native_command": [
+      "python",
+      "-m",
+      "calolab_reco",
+      "evaluate",
+      "--data-dir",
+      "<DATA_DIR>",
+      "--checkpoint",
+      "<CHECKPOINT>",
+      "--output",
+      "<OUTPUT>/native",
+      "--device",
+      "cpu",
+      "--limit",
+      "256"
+    ],
+    "docker_command": [
+      "docker",
+      "run",
+      "--rm",
+      "--platform",
+      "linux/arm64",
+      "--cpus",
+      "2",
+      "--memory",
+      "2g",
+      "--network",
+      "none",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,size=128m",
+      "--mount",
+      "type=bind,src=<DATA_DIR>,dst=/data,readonly",
+      "--mount",
+      "type=bind,src=<CHECKPOINT>,dst=/checkpoint.pt,readonly",
+      "--mount",
+      "type=bind,src=<CHECKPOINT>.sha256,dst=/checkpoint.pt.sha256,readonly",
+      "--mount",
+      "type=bind,src=<OUTPUT>/docker,dst=/output",
+      "sha256:4715ae0102246e0efff116614e2286a7f5ba137a4ffbb66458240eceaf330f57",
+      "--data-dir",
+      "/data",
+      "--checkpoint",
+      "/checkpoint.pt",
+      "--output",
+      "/output",
+      "--device",
+      "cpu",
+      "--limit",
+      "256"
+    ]
+  },
+  "native_validation_loss": 0.01561701763421297,
+  "docker_validation_loss": 0.015617012977600098,
+  "comparison": {
+    "schema_version": 1,
+    "comparison_passed": true,
+    "count": 256,
+    "rtol": 1e-05,
+    "atol": 0.0001,
+    "max_abs_difference_energy_iphi_ieta": [
+      0.0001401483352339028,
+      1.5462809848543202e-05,
+      5.369463733373436e-05
+    ],
+    "native_predictions_sha256": "1725cb786252edbc805c13857d769f724222a9cfb85ec563f905c7e19ab410ad",
+    "docker_predictions_sha256": "46ea6f876bf4f1e6383182dd188882737300ec409cda94e979f3a01a0317908c",
+    "native_metrics": {
+      "count": 256,
+      "energy_relative_bias": 0.009995380477306266,
+      "energy_relative_resolution": 0.09354069835038081,
+      "energy_mare": 0.0841599716988359,
+      "energy_mae_gev": 3.468897551965149,
+      "position_bias_iphi": -0.03210281389393181,
+      "position_bias_ieta": 0.06780904167423453,
+      "position_distance_median": 0.3758638314468409,
+      "position_distance_p68": 0.5338812380188064
+    },
+    "docker_metrics": {
+      "count": 256,
+      "energy_relative_bias": 0.009995382464785828,
+      "energy_relative_resolution": 0.0935414463537744,
+      "energy_mare": 0.08415992025830345,
+      "energy_mae_gev": 3.468895739356869,
+      "position_bias_iphi": -0.032101723350104736,
+      "position_bias_ieta": 0.06781107122471594,
+      "position_distance_median": 0.3758699251880784,
+      "position_distance_p68": 0.5338824250773901
+    },
+    "test_used": false
+  }
+}

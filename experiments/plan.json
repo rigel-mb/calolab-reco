@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "study": "parallel_studies",
+  "seed": 20260925,
+  "sampling_seed": 20260926,
+  "train_noise_seed": 20260928,
+  "validation_noise_seed": 20260929,
+  "updates": 4400,
+  "evaluate_every": 220,
+  "checkpoint_every": 220,
+  "log_every": 50,
+  "effective_batch_size": 128,
+  "microbatch_size": 32,
+  "learning_rate": 0.0003,
+  "weight_decay": 0.0001,
+  "training_seconds_ceiling": 2700,
+  "volume_counts": [7000, 14000],
+  "linear_scale_quantile": 0.95,
+  "noise": {
+    "stochastic": 0.03,
+    "constant": 0.0035,
+    "electronic_gev": 0.167,
+    "threshold_gev": 0.05
+  }
+}

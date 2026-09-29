@@ -1,0 +1,6 @@
+# Stage 1 retains source values without learned transformations.
+# The split probabilities are fixed at 70/15/15 in this version.
+sample_size = 40000
+sample_seed = 20260920
+split_seed = 20260921
+max_member_bytes = 536870912

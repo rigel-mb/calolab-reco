@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "stage": 4,
+  "status": "preparation_checks_complete",
+  "distribution": {
+    "code_sha256": "fa2b71304a3a79d4b63a8f9c52b267026d19b1df1f9f1068c75313ba2beafa45",
+    "input_selection": "train_validation_only",
+    "schema_version": 1,
+    "source_stage2_zip_sha256": "1e98f489e30dc674522148c6f90720c90034f10a8e5deadce00cdd99920f4fbe",
+    "train_count": 28118,
+    "validation_count": 5947,
+    "zip_bytes": 26381101,
+    "zip_filename": "calolab-reco-stage4.zip",
+    "zip_sha256": "ffb386c18daa822d3968912296c9e45a7d77a180a9487600a3ec469fd2d5719f"
+  },
+  "launcher": {
+    "path": "notebooks/06_colab_pretraining.ipynb",
+    "sha256": "33b20e36d2f26cfaba216b58558257fdcf51f857af942d1332c5492194362c55",
+    "cells": 19,
+    "full_colab_execution_verified": false
+  },
+  "local_checks": {
+    "cpu_tests_passed": 272,
+    "ruff": "passed",
+    "uv_lock": "passed_offline",
+    "notebook_validation_and_compilation": "passed",
+    "launcher_extraction_actual_bundle": "passed",
+    "launcher_display_synthetic_results": "passed",
+    "frozen_comparator_files_unchanged": 32
+  },
+  "packaged_code_cpu_resume_preflight": {
+    "train_only": true,
+    "events": 16,
+    "weights_discarded": true,
+    "pretraining": {
+      "passed": true,
+      "updates": 3,
+      "interrupted_after_updates": 1,
+      "checks": {
+        "model": true,
+        "optimizer": true,
+        "scheduler": true,
+        "rng": true,
+        "mask_generator": true,
+        "losses": true,
+        "sampler_order": true,
+        "cursor": true
+      },
+      "crossed_epoch_boundary": true
+    },
+    "finetuning": {
+      "passed": true,
+      "updates": 3,
+      "interrupted_after_updates": 1,
+      "checks": {
+        "model": true,
+        "optimizer": true,
+        "scheduler": true,
+        "rng": true,
+        "mask_generator": true,
+        "losses": true,
+        "sampler_order": true,
+        "cursor": true
+      },
+      "crossed_epoch_boundary": true
+    }
+  },
+  "train_only_mask_audit": {
+    "selection": "train_only",
+    "seed": 20260930,
+    "events": 28118,
+    "policy": "Use 25% only when more than 10% of 50% masks hide all positive signal",
+    "mask_ratio": 0.5,
+    "checks": [
+      {
+        "requested_mask_ratio": 0.5,
+        "masked_patches": 51,
+        "actual_mask_ratio": 0.5,
+        "all_positive_signal_hidden_count": 11,
+        "all_positive_signal_hidden_fraction": 0.0003912084785546625,
+        "no_positive_masked_cells_count": 21,
+        "no_positive_masked_cells_fraction": 0.000746852549967992,
+        "zero_signal_events": 0
+      }
+    ],
+    "masks_per_event": 1
+  },
+  "full_training_executed": false,
+  "test_used": false,
+  "next_action": "Review the measured stage 4 result before the reserved-test protocol in stage 5.",
+  "full_training_executed_scope": "This preparation record covers local checks before the T4 run. The completed GPU result is recorded separately.",
+  "completed_gpu_result": {
+    "report": "reports/pretraining/pretraining_results.json",
+    "returned_zip_sha256": "857e6cf60f11661e7d832e41b7127b4f2d134262fb87dd33d917b78dad2bd638",
+    "local_import_verified": true
+  }
+}

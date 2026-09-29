@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "source_review_sha256": "ace942acc8d2e4cc00411c061ffd0ddec003c6ab17597730b250c11646686e32",
+  "source_result_archive_sha256": "73dad1a61f7cf57628c23d05e158ba9a31defc4d9d779d1b73f08e9b399e047f",
+  "basis": "Validation learning histories only; no reserved-test data read",
+  "timing": "Active training seconds, excluding validation, setup and I/O",
+  "target": "Same task/seed selected direct error with 2% relative tolerance",
+  "observation_interval_updates": 220,
+  "comparison": "Retrospective first observed target crossing, not an executed stop rule",
+  "break_even_definition": "Strict saving: sum(D_i - F_i) > P",
+  "identical_task_formula": "floor(P / (D - F)) + 1 if D > F, otherwise no break-even",
+  "means_are": "Means over three seeds with different accuracy targets; descriptive only",
+  "mean_pretraining_seconds": 432.67392460567254,
+  "fixed_budget_mean_times": {
+    "direct_pair_seconds": 565.6581834056722,
+    "finetuning_pair_seconds": 570.2835993643306,
+    "pretraining_plus_pair_seconds": 1002.9575239700031
+  },
+  "mean_time_scenarios": {
+    "energy": {
+      "direct_seconds": 259.0187028903338,
+      "finetuning_seconds": 195.38369640767164,
+      "savings_seconds": 63.63500648266219,
+      "savings_fraction_of_mean_times": 0.24567726489466932,
+      "hypothetical_strict_break_even_tasks": 7
+    },
+    "position": {
+      "direct_seconds": 240.48791320799998,
+      "finetuning_seconds": 122.06461088666477,
+      "savings_seconds": 118.42330232133521,
+      "savings_fraction_of_mean_times": 0.49242933144382156,
+      "hypothetical_strict_break_even_tasks": 4
+    }
+  },
+  "hypothetical_balanced_mix_mean_times": {
+    "savings_per_energy_position_pair_seconds": 182.05830880399742,
+    "strict_break_even_pairs": 3,
+    "strict_break_even_tasks_in_complete_pairs": 6
+  },
+  "rows": [
+    {
+      "seed": 20260925,
+      "pretraining_seconds": 418.8930189179978,
+      "tasks": {
+        "energy": {
+          "validation_target": 0.023694451113267356,
+          "direct_seconds": 249.04860553499913,
+          "finetuning_seconds": 255.67638705599666,
+          "savings_seconds": -6.62778152099753,
+          "savings_fraction": -0.026612401650512832,
+          "hypothetical_strict_break_even_tasks": null,
+          "selected_direct_error": 0.023229854032615054,
+          "selected_finetuned_error": 0.02315537631720147
+        },
+        "position": {
+          "validation_target": 0.05887766712159875,
+          "direct_seconds": 209.8910649820035,
+          "finetuning_seconds": 154.1264010150012,
+          "savings_seconds": 55.76466396700232,
+          "savings_fraction": 0.2656838392419596,
+          "hypothetical_strict_break_even_tasks": 8,
+          "selected_direct_error": 0.05772320306039093,
+          "selected_finetuned_error": 0.050312250700757434
+        }
+      },
+      "hypothetical_balanced_mix": {
+        "savings_per_energy_position_pair_seconds": 49.13688244600479,
+        "strict_break_even_pairs": 9,
+        "strict_break_even_tasks_in_complete_pairs": 18
+      },
+      "actual_fixed_budget": {
+        "updates_per_phase": 4400,
+        "direct_pair_seconds": 556.7092442200021,
+        "finetuning_pair_seconds": 566.4458318420006,
+        "pretraining_plus_pair_seconds": 985.3388507599984
+      }
+    },
+    {
+      "seed": 20261001,
+      "pretraining_seconds": 447.4335866280139,
+      "tasks": {
+        "energy": {
+          "validation_target": 0.02593681206905911,
+          "direct_seconds": 255.05363168299073,
+          "finetuning_seconds": 129.79555147601423,
+          "savings_seconds": 125.2580802069765,
+          "savings_fraction": 0.4911048683386767,
+          "hypothetical_strict_break_even_tasks": 4,
+          "selected_direct_error": 0.02542824712652854,
+          "selected_finetuned_error": 0.01969755227445947
+        },
+        "position": {
+          "validation_target": 0.10714275366120764,
+          "direct_seconds": 254.84597727400478,
+          "finetuning_seconds": 56.34299015098895,
+          "savings_seconds": 198.50298712301583,
+          "savings_fraction": 0.7789135588732083,
+          "hypothetical_strict_break_even_tasks": 3,
+          "selected_direct_error": 0.10504191535412513,
+          "selected_finetuned_error": 0.04452711854146871
+        }
+      },
+      "hypothetical_balanced_mix": {
+        "savings_per_energy_position_pair_seconds": 323.76106732999233,
+        "strict_break_even_pairs": 2,
+        "strict_break_even_tasks_in_complete_pairs": 4
+      },
+      "actual_fixed_budget": {
+        "updates_per_phase": 4400,
+        "direct_pair_seconds": 567.835087092999,
+        "finetuning_pair_seconds": 574.818892033954,
+        "pretraining_plus_pair_seconds": 1022.2524786619679
+      }
+    },
+    {
+      "seed": 20261002,
+      "pretraining_seconds": 431.69516827100597,
+      "tasks": {
+        "energy": {
+          "validation_target": 0.024532291373337175,
+          "direct_seconds": 272.95387145301174,
+          "finetuning_seconds": 200.679150691004,
+          "savings_seconds": 72.27472076200775,
+          "savings_fraction": 0.2647873077500923,
+          "hypothetical_strict_break_even_tasks": 6,
+          "selected_direct_error": 0.024051266052291347,
+          "selected_finetuned_error": 0.021633209299375736
+        },
+        "position": {
+          "validation_target": 0.050509052827522286,
+          "direct_seconds": 256.7266973679916,
+          "finetuning_seconds": 155.72444149400417,
+          "savings_seconds": 101.00225587398745,
+          "savings_fraction": 0.3934232664911004,
+          "hypothetical_strict_break_even_tasks": 5,
+          "selected_direct_error": 0.04951867924266891,
+          "selected_finetuned_error": 0.04628255664891594
+        }
+      },
+      "hypothetical_balanced_mix": {
+        "savings_per_energy_position_pair_seconds": 173.2769766359952,
+        "strict_break_even_pairs": 3,
+        "strict_break_even_tasks_in_complete_pairs": 6
+      },
+      "actual_fixed_budget": {
+        "updates_per_phase": 4400,
+        "direct_pair_seconds": 572.4302189040154,
+        "finetuning_pair_seconds": 569.5860742170371,
+        "pretraining_plus_pair_seconds": 1001.2812424880431
+      }
+    }
+  ],
+  "conditions_for_reuse": [
+    "A single existing pretrained encoder can initialize every added task",
+    "Each added task reaches acceptable independent evaluation quality",
+    "Each scenario repeats observed per-task costs on comparable hardware",
+    "Training seeds are repetitions, not distinct reusable tasks",
+    "No new tasks or prospective early-stopping policy were evaluated",
+    "The fixed 4400-update runs themselves did not stop at target crossings"
+  ]
+}

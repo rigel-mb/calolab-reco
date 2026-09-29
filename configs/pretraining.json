@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "seed": 20260924,
+  "mask_seed": 20260925,
+  "audit_seed": 20260930,
+  "diagnostic_seed": 20260931,
+  "pretraining_epochs": 20,
+  "finetuning_epochs": 20,
+  "effective_batch_size": 128,
+  "microbatch_size": 32,
+  "learning_rate": 0.0003,
+  "weight_decay": 0.0001,
+  "max_compute_seconds": 6300,
+  "checkpoint_every_updates": 100,
+  "reconstruction_events": 8,
+  "mask_ratio_initial": 0.5,
+  "mask_ratio_fallback": 0.25,
+  "all_signal_hidden_threshold": 0.1,
+  "dropout": 0.0,
+  "pretraining_checkpoint": "last_epoch",
+  "relative_tolerance": 0.02,
+  "validation_noise_seed": 20260929
+}

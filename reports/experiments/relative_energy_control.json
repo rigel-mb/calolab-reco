@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "kind": "relative_energy_control",
+  "scope": "signed-noise local 7 x 7 observed window; train fit, validation evaluation",
+  "test_used": false,
+  "train_count": 28118,
+  "validation_count": 5947,
+  "train_ids_sha256": "3ca93135b5b41c30e4a47a85acf495e76d320e77f9ab78b619f921783f8407a1",
+  "validation_ids_sha256": "76ef426dcd947e843b694b33a8acb58c38f4b5320e9f5656323bb291d3006b62",
+  "parallel_report_sha256": "7f2aa796c4199211b93b9b37b4d17fddfe4d125b3c883e1fea5d2fb30af160e1",
+  "config_sha256": "a61f49e6119c8a7a1c5988b725bc2463471e91582b335c5fd991395dd9b884f3",
+  "predictions_file": "relative_energy_control_predictions.npz",
+  "predictions_sha256": "3fa5db7dd4b77c78e15cef6edf385c05a55ee1817deb7c6606e038b30ec84b5f",
+  "models": {
+    "least_squares": {
+      "calibration": {
+        "slope": 1.0297606883446786,
+        "intercept_gev": 0.015572391302984464,
+        "fit_objective": "mean squared energy error in GeV on train"
+      },
+      "train_relative_huber": 0.2500173008631155,
+      "train_energy_mare": 0.046510430229393065,
+      "validation": {
+        "count": 5947,
+        "energy_mare": 0.0464368436628363,
+        "energy_mae_gev": 1.110116986652001,
+        "energy_relative_bias": 0.0013958333400622043,
+        "relative_huber": 0.24895349711757206,
+        "nonpositive_predictions": 4
+      },
+      "validation_by_energy": {
+        "energy_bins": [
+          {
+            "lower_gev": 1.0,
+            "upper_gev": 10.0,
+            "count": 528,
+            "metrics": {
+              "count": 528,
+              "energy_mare": 0.24435079620061093,
+              "energy_mae_gev": 0.9549998148904437,
+              "energy_relative_bias": 0.011297482506956863,
+              "relative_huber": 1.9987795602159482,
+              "nonpositive_predictions": 4
+            }
+          },
+          {
+            "lower_gev": 10.0,
+            "upper_gev": 30.0,
+            "count": 1207,
+            "metrics": {
+              "count": 1207,
+              "energy_mare": 0.054327301383986795,
+              "energy_mae_gev": 0.9986716772849931,
+              "energy_relative_bias": 0.003272569238184864,
+              "relative_huber": 0.2323936882459271,
+              "nonpositive_predictions": 0
+            }
+          },
+          {
+            "lower_gev": 30.0,
+            "upper_gev": 60.0,
+            "count": 1839,
+            "metrics": {
+              "count": 1839,
+              "energy_mare": 0.02384958703436896,
+              "energy_mae_gev": 1.0446662033627678,
+              "energy_relative_bias": 0.0005711592900890254,
+              "relative_huber": 0.04803104281667901,
+              "nonpositive_predictions": 0
+            }
+          },
+          {
+            "lower_gev": 60.0,
+            "upper_gev": 100.0001,
+            "count": 2373,
+            "metrics": {
+              "count": 2373,
+              "energy_mare": 0.015891380338090334,
+              "energy_mae_gev": 1.2520387504804806,
+              "energy_relative_bias": -0.0011227993659022933,
+              "relative_huber": 0.023743181673608803,
+              "nonpositive_predictions": 0
+            }
+          }
+        ],
+        "outside_bins": {
+          "count": 0,
+          "metrics": null
+        }
+      }
+    },
+    "relative_huber": {
+      "calibration": {
+        "slope": 1.0239582800140221,
+        "intercept_gev": 0.03860477458174216,
+        "fit_objective": "mean Huber((a * signed_sum + b - true_energy) / (0.1 * true_energy)) on train",
+        "huber_delta": 1.0,
+        "relative_scale": 0.1,
+        "iterations": 28
+      },
+      "train_relative_huber": 0.2488608601096728,
+      "train_energy_mare": 0.04652712467262262,
+      "validation": {
+        "count": 5947,
+        "energy_mare": 0.04647286430636139,
+        "energy_mae_gev": 1.123358829729297,
+        "energy_relative_bias": -0.0031773585359760126,
+        "relative_huber": 0.24830098971500003,
+        "nonpositive_predictions": 4
+      },
+      "validation_by_energy": {
+        "energy_bins": [
+          {
+            "lower_gev": 1.0,
+            "upper_gev": 10.0,
+            "count": 528,
+            "metrics": {
+              "count": 528,
+              "energy_mare": 0.2432985524880186,
+              "energy_mae_gev": 0.9497576469492524,
+              "energy_relative_bias": 0.01158106660544955,
+              "relative_huber": 1.9880911319652044,
+              "nonpositive_predictions": 4
+            }
+          },
+          {
+            "lower_gev": 10.0,
+            "upper_gev": 30.0,
+            "count": 1207,
+            "metrics": {
+              "count": 1207,
+              "energy_mare": 0.05403933665716255,
+              "energy_mae_gev": 0.9946207204485146,
+              "energy_relative_bias": -0.0011184215431584937,
+              "relative_huber": 0.22989145794545496,
+              "nonpositive_predictions": 0
+            }
+          },
+          {
+            "lower_gev": 30.0,
+            "upper_gev": 60.0,
+            "count": 1839,
+            "metrics": {
+              "count": 1839,
+              "energy_mare": 0.02393614953366772,
+              "energy_mae_gev": 1.0488880987044602,
+              "energy_relative_bias": -0.0045352210524541425,
+              "relative_huber": 0.04846431071625656,
+              "nonpositive_predictions": 0
+            }
+          },
+          {
+            "lower_gev": 60.0,
+            "upper_gev": 100.0001,
+            "count": 2373,
+            "metrics": {
+              "count": 2373,
+              "energy_mare": 0.01629516644696468,
+              "energy_mae_gev": 1.2851793087703598,
+              "energy_relative_bias": -0.006456109592528967,
+              "relative_huber": 0.02542309777080364,
+              "nonpositive_predictions": 0
+            }
+          }
+        ],
+        "outside_bins": {
+          "count": 0,
+          "metrics": null
+        }
+      }
+    },
+    "relative_mae": {
+      "calibration": {
+        "slope": 1.0272844339500509,
+        "intercept_gev": 0.013017298816823342,
+        "fit_objective": "mean abs((a * signed_sum + b - true_energy) / true_energy) on train",
+        "slope_constraint": "nonnegative",
+        "search_upper_bound": 4.119042753378714,
+        "iterations": 45,
+        "train_energy_mare": 0.04641663861375333
+      },
+      "train_relative_huber": 0.24919002005248736,
+      "train_energy_mare": 0.04641663861375333,
+      "validation": {
+        "count": 5947,
+        "energy_mare": 0.04632875544507219,
+        "energy_mae_gev": 1.1093867011880296,
+        "energy_relative_bias": -0.0011286625030305624,
+        "relative_huber": 0.2481432880634162,
+        "nonpositive_predictions": 4
+      },
+      "validation_by_energy": {
+        "energy_bins": [
+          {
+            "lower_gev": 1.0,
+            "upper_gev": 10.0,
+            "count": 528,
+            "metrics": {
+              "count": 528,
+              "energy_mare": 0.24358254453823927,
+              "energy_mae_gev": 0.9521593698208539,
+              "energy_relative_bias": 0.008214226488818163,
+              "relative_huber": 1.9912528848478013,
+              "nonpositive_predictions": 4
+            }
+          },
+          {
+            "lower_gev": 10.0,
+            "upper_gev": 30.0,
+            "count": 1207,
+            "metrics": {
+              "count": 1207,
+              "energy_mare": 0.05416436590677748,
+              "energy_mae_gev": 0.9963025966014224,
+              "energy_relative_bias": 0.0007225682626453563,
+              "relative_huber": 0.2309939079028267,
+              "nonpositive_predictions": 0
+            }
+          },
+          {
+            "lower_gev": 30.0,
+            "upper_gev": 60.0,
+            "count": 1839,
+            "metrics": {
+              "count": 1839,
+              "energy_mare": 0.023802674940819456,
+              "energy_mae_gev": 1.0425605716560178,
+              "energy_relative_bias": -0.0018927863792445416,
+              "relative_huber": 0.047946476352875675,
+              "nonpositive_predictions": 0
+            }
+          },
+          {
+            "lower_gev": 60.0,
+            "upper_gev": 100.0001,
+            "count": 2373,
+            "metrics": {
+              "count": 2373,
+              "energy_mare": 0.01591066845765129,
+              "energy_mae_gev": 1.2536773869896616,
+              "energy_relative_bias": -0.003556920873662444,
+              "relative_huber": 0.0241649363935299,
+              "nonpositive_predictions": 0
+            }
+          }
+        ],
+        "outside_bins": {
+          "count": 0,
+          "metrics": null
+        }
+      }
+    }
+  }
+}

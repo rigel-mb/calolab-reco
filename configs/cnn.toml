@@ -1,0 +1,9 @@
+# One fixed supervised experiment. Validation selects the checkpoint; test stays reserved.
+seed = 20260924
+epochs = 20
+effective_batch_size = 128
+microbatch_size = 32
+learning_rate = 0.0003
+weight_decay = 0.0001
+eval_batch_size = 128
+max_train_seconds = 2700

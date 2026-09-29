@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "purpose": "Frozen record of the completed supervised comparator. This is not a configuration consumed by the training CLI.",
+  "status": "supervised_validation_reference; reserved test not evaluated",
+  "case": "transformer_residual",
+  "case_specification": [
+    "transformer",
+    "relative_huber",
+    0.0,
+    true,
+    "clean"
+  ],
+  "architecture": {
+    "input_shape": [
+      "B",
+      1,
+      30,
+      85
+    ],
+    "patch_shape": [
+      5,
+      5
+    ],
+    "patch_grid": [
+      6,
+      17
+    ],
+    "patch_count": 102,
+    "ordered_values_per_patch": 25,
+    "patch_projection": "Linear(25,64), with bias",
+    "encoder_width": 64,
+    "position_encoding": "fixed two-dimensional sine/cosine patch indices, added to patch embeddings",
+    "attention_heads": 4,
+    "encoder_blocks": 3,
+    "feedforward_width": 128,
+    "activation": "GELU",
+    "normalization": "pre-norm blocks and final LayerNorm(64), eps=1e-5",
+    "dropout": 0.0,
+    "pooling": "mean over 102 encoded tokens",
+    "physical_features": 15,
+    "physical_feature_order": [
+      "log1p(deposit_sum_GeV)",
+      "raw_row_barycenter/30",
+      "raw_column_barycenter/85",
+      "sin(2*pi*row)",
+      "sin(2*pi*column)",
+      "cos(2*pi*row)",
+      "cos(2*pi*column)",
+      "sin(4*pi*row)",
+      "sin(4*pi*column)",
+      "cos(4*pi*row)",
+      "cos(4*pi*column)",
+      "sin(6*pi*row)",
+      "sin(6*pi*column)",
+      "cos(6*pi*row)",
+      "cos(6*pi*column)"
+    ],
+    "correction_head": "Linear(79,64), GELU, Linear(64,3)",
+    "head_initialization": "last linear weight and bias are zero; initial predictions equal the affine reference",
+    "energy_output": "affine_energy * exp(0.1 * tanh(delta_energy))",
+    "energy_factor_bounds": [
+      0.9048374180359595,
+      1.1051709180756477
+    ],
+    "position_output": "affine_position + delta_position",
+    "parameters": 107523
+  },
+  "preprocessing": {
+    "regime": "clean",
+    "input_transform": "log1p(deposit / input_scale)",
+    "input_scale": 1.5780929327011108,
+    "scale_method": "median of all strictly positive deposits in full train",
+    "fit_selection": "train_only",
+    "energy_divisor_for_physical_features": 1000.0,
+    "affine_calibration": {
+      "constant_features": [
+        false,
+        false,
+        false
+      ],
+      "coordinate_convention": "integer array indices, not physical crystal centers",
+      "feature_order": [
+        "deposit_sum_gev",
+        "row_barycenter",
+        "column_barycenter"
+      ],
+      "fit_method": "independent univariate ordinary least squares on train",
+      "input_energy_divisor": 1000.0,
+      "intercepts": [
+        -0.06674771488822273,
+        0.4590096792856624,
+        0.45769963406671366
+      ],
+      "n_train": 28118,
+      "schema_version": 1,
+      "slopes": [
+        1.0266956537813323,
+        1.000512837705688,
+        0.9997804911411903
+      ],
+      "target_order": [
+        "energy_gev",
+        "local_iphi",
+        "local_ieta"
+      ]
+    },
+    "target_order": [
+      "incident_energy_GeV",
+      "local_fractional_iphi",
+      "local_fractional_ieta"
+    ],
+    "target_standardization": "mean and std are stored buffers, but not used by the residual forward path or relative Huber loss",
+    "geometry_scope": "array indices and stored fractional coordinates; no physical crystal-center claim"
+  },
+  "loss": {
+    "name": "relative_huber",
+    "huber_delta": 1.0,
+    "energy_residual": "(predicted_energy - true_energy) / (0.10 * true_energy)",
+    "position_residual": "predicted_position - true_position, in stored coordinate units",
+    "reduction": "0.5 * mean(Huber(energy_residual)) + 0.5 * mean(Huber(position_residual)); position mean covers both coordinates",
+    "truth_use": "supervised loss only, never an input or input normalization"
+  },
+  "training": {
+    "seed": 20260924,
+    "batch_order": "CPU torch.Generator seed 20260924; one torch.randperm(train_count) per epoch; generator advances across epochs",
+    "epochs": 20,
+    "effective_batch_size": 128,
+    "microbatch_size": 32,
+    "last_batch_size": 86,
+    "updates_per_epoch": 220,
+    "total_updates": 4400,
+    "evaluation_batch_size": 128,
+    "optimizer": "AdamW",
+    "initial_learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "scheduler": "CosineAnnealingLR, stepped once after each optimizer update",
+    "scheduler_T_max": 4400,
+    "scheduler_eta_min": 0.0,
+    "precision": "float32; TF32 disabled",
+    "gradient_clipping": false,
+    "mixed_precision": false,
+    "early_stopping": false,
+    "train_count": 28118,
+    "validation_count": 5947,
+    "test_used": false,
+    "suite_max_seconds": 2400,
+    "suite_limit_scope": "wall-clock ceiling shared by all eight runs and their diagnostics, not a per-model allowance"
+  },
+  "selection": {
+    "score": "energy_mare / 0.10 + position_distance_median",
+    "direction": "minimize",
+    "tie_break": "first epoch; checkpoint replaced only on strict improvement",
+    "frequency": "once after every full epoch",
+    "selected_epoch": 15,
+    "selected_updates": 3300
+  },
+  "source": {
+    "experiment_summary": "reports/experiments/neural_summary.json",
+    "paired_comparison": "reports/experiments/paired_comparison.json",
+    "periodic_calibration": "reports/experiments/calibration.json",
+    "runner": "scripts/reconstruction_experiments.py",
+    "provenance": {
+      "code_sha256": "88954e937b8629cb483dfe2bf915cc5aeaccc3755021c7e1f13b2bb3edbcaa52",
+      "data_sha256": {
+        "train.npz": "c7bc1354cecade3583c5f31b2921854f6369c13a99186b9c56f54dc730de0c7c",
+        "validation.npz": "b83399589daefd899980fe71f067423b8daa084a7c6eaa7b84a2ddea446753f4"
+      },
+      "experiment_runner_sha256": "2afee26303d8e79e5bbe6079f3f18db5838d5c83deeacd0fae95c635686a1e39",
+      "prepared_manifest_sha256": "abac690f34e6292c4bf0f42af7b02bad3a6653c8dbddfbb71093e3e749a95a06",
+      "prepared_output_sha256": {
+        "deposits.npy": "c350a31748a16765487dd709aecd3134647ec0a894e1fc3f9cf636cec2f68e99",
+        "source_ids.npy": "d90bbc0b4846264d3f5eeecf371039d27ed8ee5d823ada158bbd10cb17f539a4",
+        "split.npy": "9aff508371b07940d7c4e07a960e35f10bfa0b09f917b7595745170727edbdbe",
+        "targets.npy": "a5f1e658493d97121f74ce77f2934e3008c5ddec9dc2ee8fde3ba2887ed03c28"
+      },
+      "source_files": {
+        "configs/cnn.toml": "1f23c5c89372732856fe2cee255515bb2b348b7204c484bfe0aaf0d1f74258e2",
+        "pyproject.toml": "7fb0b77b11ec755f1b7e640a4c3ecc1004bb3c7c238bc17276bb6083c8c77f81",
+        "src/calolab_reco/__init__.py": "81b69dd7243d7362180247501ad09a8a47d1b6f628c60557108658c146961f5e",
+        "src/calolab_reco/__main__.py": "b40f3498b0aa07bd4a13d5ef24a9e057aa0059401dd7328ddcb612a2ab6127a3",
+        "src/calolab_reco/baselines.py": "60273d6353fbbc4e3b5683f8bb449fbb4d5ab50a34e0f5b5021154029194873f",
+        "src/calolab_reco/data.py": "a1af8db7274678ccf3b519e18e52b3ca3a8de98727e76caceaf86b3e4964cb22",
+        "src/calolab_reco/metrics.py": "88bbdc4434ccecc3a689fd784b5f83e5ff8c97842b07d2e0e72fa0c39e4f800d",
+        "src/calolab_reco/pilot.py": "d9dd92e64b43175665f255e490487bdb8aca8dcf90a504148913072f9b7b88cd",
+        "src/calolab_reco/pilot_models.py": "69aa192247a2fc18fc1e116949e5ad5d70aea42eaddae816bc35c90229a8397a",
+        "src/calolab_reco/pilot_reporting.py": "b84897441ba8b03bf5b3d319a7fb9996db9c61bc5174c363e5e45ee544a1634c",
+        "src/calolab_reco/stage2_artifacts.py": "b47123c73ece04da89859bc773a93c826715050b5f79bb8ad11dc0054fe2f2ca",
+        "src/calolab_reco/study_reporting.py": "6ca4427f4306e93540c8b5b83d90ee16b0c46be9eeeeeded1deebdfb5ce9e5dd",
+        "src/calolab_reco/training.py": "87cf0035ee1bb85241cc80bda214de10f80e33f9a4b397c30fdc12e2d14d20cd",
+        "uv.lock": "317b8d3fd3d11217c30cbd8e9459d81ce94c18081f19caf4383746721dd43070"
+      },
+      "stage2_manifest_sha256": "5a23b87f71835c0abefe3c39e59d24f699e21215ab0ac0cf593947ec55d98181"
+    },
+    "selected_artifacts": {
+      "selected_epoch": 15,
+      "training_seed": 20260924,
+      "checkpoint_sha256": "26311879df4e21f0e181d3b6c23db16dc7cc6ba4c508103b2baa34f61f1b82c3",
+      "predictions_sha256": "cd81a45616c9d020fad0e291913b7254fbea75e26ac3655d2b4019cd7a5e8db6",
+      "report_sha256": "349a47d826ac14070d41aeebf6754064818455cc344ebfb3b58fe1f988250489"
+    },
+    "report_sha256": {
+      "reports/experiments/neural_summary.json": "f13cbb14c61dea7678c397922dc29a103fe5f17b1303a83ab82dd17494e567a0",
+      "reports/experiments/paired_comparison.json": "f207862105d118cbfa4bd5215e4c14a8090859a15e9b874998770f83a3206972",
+      "reports/experiments/calibration.json": "bc1016e5a8f02f16930865f8d05e24f73ed6c11df38e477ce786f545d15c1eb6"
+    }
+  },
+  "stage4_requirements": {
+    "status": "not executed; these conditions define the future matched comparison",
+    "same": [
+      "prepared train and validation events",
+      "all train labels",
+      "deposit preprocessing and affine calibration",
+      "supervised architecture, features and output parameterization",
+      "relative Huber loss",
+      "seed and batch-order policy",
+      "20 epochs / 4400 supervised updates",
+      "optimizer and learning-rate schedule",
+      "validation checkpoint selection rule",
+      "validation metrics and input sensitivity regimes"
+    ],
+    "transfer": "Instantiate the full ExperimentModel with the original seed and identical constructor sequence before loading pretrained patch-encoder weights only. Retain the entire freshly initialized correction head, including the first linear layer weights and the zero final layer; then fine-tune the full encoder and head. Create a fresh optimizer and scheduler, and independently seed the supervised sampler with the original batch-order seed. Only the encoder initial state differs from the direct comparator.",
+    "pretraining_data": "train only; no validation or test fitting",
+    "time_comparison": {
+      "energy_metric": "energy_mare",
+      "position_metric": "position_distance_median",
+      "reference": "selected supervised transformer_residual checkpoint",
+      "relative_tolerance": 0.02,
+      "condition": "both errors at or below reference * 1.02 at the same evaluation",
+      "cadence": "epoch-end validation; report initial pre-update validation separately",
+      "time_axis": "cumulative active supervised training seconds",
+      "total_cost": "report pretraining time separately and add it to fine-tuning time",
+      "hardware": "comparable hardware, precision and timing boundaries",
+      "included_costs": "minibatch indexing, CPU-to-GPU batch transfer, forward/backward computation, gradient checks and optimizer/scheduler updates",
+      "excluded_costs": "initial data loading and preparation, validation, checkpoint persistence and Drive transfers"
+    },
+    "scope_limit": "No additional training, pretraining, test evaluation or new data is performed by finalizing this record."
+  }
+}

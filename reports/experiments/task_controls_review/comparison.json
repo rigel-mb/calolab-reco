@@ -1,0 +1,171 @@
+{
+  "complete": true,
+  "interpretation": "Exploratory validation with one training seed. Energy and position rows for a weighted joint model may use different selected checkpoints. Different architectures selected different full-grid input transforms. This table does not measure training-seed variability or use the reserved test.",
+  "kind": "task_controls_validation_review",
+  "local_physical_reference": {
+    "position_distance_median": 0.034145915258705334,
+    "prediction_sha256": "e971b36c6f1314df80ad2910bd9a45b333efdb891dd4d599330f1686a36cf79d",
+    "source_case": "readout_clean.periodic_baseline"
+  },
+  "paired_local_position": {
+    "ci95": [
+      0.0026852625073526923,
+      0.004291923348917336
+    ],
+    "difference": 0.003399987226621423,
+    "events": 5947,
+    "method": "Paired percentile event bootstrap of difference in median position error",
+    "resamples": 1000,
+    "scope": "Selected validation checkpoints; excludes training-seed and selection uncertainty",
+    "seed": 20260926
+  },
+  "provenance": {
+    "cnn_bundle_sha256": "4645c574dcedf54e7b47d2738893f1c4504c093aa68273b5b97ba86722f1e67f",
+    "cnn_reference_bundle_sha256": "4210902f5e3792271db736b884a72583e0b25f5ecda8d45abdcc8f8f324b1768",
+    "cnn_reference_sha256": "7f2aa796c4199211b93b9b37b4d17fddfe4d125b3c883e1fea5d2fb30af160e1",
+    "cnn_result_sha256": "a680afe105bb14c167021b500c6d011b116924e6e6e08bc87af46880efde113d",
+    "data_sha256": {
+      "train.npz": "c7bc1354cecade3583c5f31b2921854f6369c13a99186b9c56f54dc730de0c7c",
+      "validation.npz": "b83399589daefd899980fe71f067423b8daa084a7c6eaa7b84a2ddea446753f4"
+    },
+    "mirror_selection_reverified": true,
+    "transformer_bundle_sha256": "73336879bdc84c869659220457d0641442a553ca612608e34a85a6aafd2b09d2",
+    "transformer_mirror_result_sha256": "8ba86ed61511d8f221b5c95693370e3f52a3d951dfddee9ba28165c36fbb11be",
+    "transformer_result_sha256": "9aa5322a6de795d739509bd87756657e96158b167af3e893db5c6d3762ab4004"
+  },
+  "rows": [
+    {
+      "architecture": "CNN",
+      "case_compute_seconds": 119.77125290500254,
+      "control": "full_energy_025",
+      "control_value": 0.08025367942169913,
+      "difference_from_joint": 0.011151603015894185,
+      "difference_from_specialist": 0.014679743872793916,
+      "joint_reference": 0.06910207640580494,
+      "metric": "energy_mare",
+      "selected_update": 4400,
+      "selection": "energy",
+      "specialist_reference": 0.06557393554890521
+    },
+    {
+      "architecture": "CNN",
+      "case_compute_seconds": 119.77125290500254,
+      "control": "full_energy_025",
+      "control_value": 0.24673061226786125,
+      "difference_from_joint": -0.02678663926700542,
+      "difference_from_specialist": 0.05815579253206904,
+      "joint_reference": 0.27351725153486667,
+      "metric": "position_distance_median",
+      "selected_update": 3960,
+      "selection": "position",
+      "specialist_reference": 0.1885748197357922
+    },
+    {
+      "architecture": "CNN",
+      "case_compute_seconds": 116.6294370090028,
+      "control": "full_energy_075",
+      "control_value": 0.06713077605162088,
+      "difference_from_joint": -0.0019713003541840662,
+      "difference_from_specialist": 0.0015568405027156645,
+      "joint_reference": 0.06910207640580494,
+      "metric": "energy_mare",
+      "selected_update": 4400,
+      "selection": "energy",
+      "specialist_reference": 0.06557393554890521
+    },
+    {
+      "architecture": "CNN",
+      "case_compute_seconds": 116.6294370090028,
+      "control": "full_energy_075",
+      "control_value": 0.3258308205894162,
+      "difference_from_joint": 0.052313569054549536,
+      "difference_from_specialist": 0.137256000853624,
+      "joint_reference": 0.27351725153486667,
+      "metric": "position_distance_median",
+      "selected_update": 4400,
+      "selection": "position",
+      "specialist_reference": 0.1885748197357922
+    },
+    {
+      "architecture": "CNN",
+      "case_compute_seconds": 90.15424430400242,
+      "control": "local_clean_position",
+      "control_value": 0.11452366283817683,
+      "difference_from_joint": -0.2832920007913533,
+      "difference_from_specialist": null,
+      "joint_reference": 0.39781566362953014,
+      "metric": "position_distance_median",
+      "selected_update": 4400,
+      "selection": "position",
+      "specialist_reference": null
+    },
+    {
+      "architecture": "Transformer",
+      "case_compute_seconds": 358.70080426700315,
+      "control": "full_energy_025",
+      "control_value": 0.06201078993684581,
+      "difference_from_joint": 0.0026601420762687802,
+      "difference_from_specialist": 0.0012896067317235416,
+      "joint_reference": 0.05935064786057703,
+      "metric": "energy_mare",
+      "selected_update": 4400,
+      "selection": "energy",
+      "specialist_reference": 0.06072118320512227
+    },
+    {
+      "architecture": "Transformer",
+      "case_compute_seconds": 358.70080426700315,
+      "control": "full_energy_025",
+      "control_value": 0.3678440580869621,
+      "difference_from_joint": 0.006952005831332819,
+      "difference_from_specialist": -0.07798120187132546,
+      "joint_reference": 0.36089205225562926,
+      "metric": "position_distance_median",
+      "selected_update": 4400,
+      "selection": "position",
+      "specialist_reference": 0.44582525995828753
+    },
+    {
+      "architecture": "Transformer",
+      "case_compute_seconds": 355.7893273900031,
+      "control": "full_energy_075",
+      "control_value": 0.05990370075492783,
+      "difference_from_joint": 0.0005530528943508001,
+      "difference_from_specialist": -0.0008174824501944386,
+      "joint_reference": 0.05935064786057703,
+      "metric": "energy_mare",
+      "selected_update": 4400,
+      "selection": "energy",
+      "specialist_reference": 0.06072118320512227
+    },
+    {
+      "architecture": "Transformer",
+      "case_compute_seconds": 355.7893273900031,
+      "control": "full_energy_075",
+      "control_value": 0.4813005020323991,
+      "difference_from_joint": 0.12040844977676984,
+      "difference_from_specialist": 0.03547524207411157,
+      "joint_reference": 0.36089205225562926,
+      "metric": "position_distance_median",
+      "selected_update": 4400,
+      "selection": "position",
+      "specialist_reference": 0.44582525995828753
+    },
+    {
+      "architecture": "Transformer",
+      "case_compute_seconds": 348.6590903759775,
+      "control": "local_clean_position",
+      "control_value": 0.03754590248532676,
+      "difference_from_joint": -0.3612701007993692,
+      "difference_from_specialist": null,
+      "joint_reference": 0.39881600328469596,
+      "metric": "position_distance_median",
+      "selected_update": 4180,
+      "selection": "position",
+      "specialist_reference": null
+    }
+  ],
+  "schema_version": 1,
+  "test_used": false,
+  "validation_ids_sha256": "76ef426dcd947e843b694b33a8acb58c38f4b5320e9f5656323bb291d3006b62"
+}

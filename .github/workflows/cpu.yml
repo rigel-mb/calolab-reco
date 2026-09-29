@@ -1,0 +1,32 @@
+name: CPU checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.6"
+          python-version: "3.12"
+          enable-cache: true
+      - run: uv sync --locked --extra cpu --group notebook
+      - run: uv lock --check
+      - run: uv run --locked --extra cpu ruff check .
+      - run: uv run --locked --extra cpu pytest
+      - name: Compile notebooks without downloading data or running CUDA
+        run: |
+          uv run --locked --extra cpu python - <<'PY'
+          from pathlib import Path
+          import nbformat
+          for directory in ('notebooks', 'experiments'):
+              for path in Path(directory).rglob('*.ipynb'):
+                  notebook = nbformat.read(path, as_version=4)
+                  nbformat.validate(notebook)
+                  for index, cell in enumerate(notebook.cells):
+                      if cell.cell_type == 'code':
+                          compile(cell.source, f'{path.name}:{index}', 'exec')
+          PY

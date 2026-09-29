@@ -1,0 +1,11 @@
+{
+  "code_sha256": "88954e937b8629cb483dfe2bf915cc5aeaccc3755021c7e1f13b2bb3edbcaa52",
+  "input_selection": "train_validation_only",
+  "raw_data_bytes": 348416820,
+  "schema_version": 1,
+  "train_count": 28118,
+  "val_count": 5947,
+  "zip_bytes": 26197856,
+  "zip_filename": "calolab-reco-stage2.zip",
+  "zip_sha256": "1e98f489e30dc674522148c6f90720c90034f10a8e5deadce00cdd99920f4fbe"
+}

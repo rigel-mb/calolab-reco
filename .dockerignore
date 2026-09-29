@@ -1,0 +1,12 @@
+*
+!Dockerfile
+!pyproject.toml
+!uv.lock
+!configs/
+!configs/*.toml
+!src/
+!src/calolab_reco/
+!src/calolab_reco/*.py
+!configs/*.json
+!src/calolab_reco/confirmation/
+!src/calolab_reco/confirmation/*.py

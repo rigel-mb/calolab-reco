@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "test_used": false,
+  "status": "exploratory_validation",
+  "reference": "direct residual Transformer",
+  "candidate": "same Transformer after masked pretraining and full fine-tuning",
+  "method": "Paired iid event bootstrap, percentile intervals, linear quantiles",
+  "seed": 20260922,
+  "resamples": 2000,
+  "validation_count": 5947,
+  "direction": "candidate minus reference; negative favors pretraining",
+  "source_sha256": {
+    "direct_predictions": "cd81a45616c9d020fad0e291913b7254fbea75e26ac3655d2b4019cd7a5e8db6",
+    "pretrained_predictions": "a3e2207a69544631b6bbb7c224b346103a572717eb4b4f84d20fd3a2747f9525",
+    "reference_report": "c9925eb41d96be9d95d0ebe9d5cf6ca645bdc9aa37703962f4549784124f0efd",
+    "pretrained_report": "d6c87191d2ef461bda2972d885f0e5a8056c29ce307f0fb7830b9ccae700ea49",
+    "comparison_script": "6e984ff09c86de3e123167a423b513d817d679a30e722487128486f0d4cf0c70",
+    "bootstrap_script": "6398d4a854cf6c474502237237c1e84c2dcfb0578e9f21c4e3f75bc88a171b15"
+  },
+  "comparison": {
+    "energy_mare_percentage_points": {
+      "candidate_minus_reference": 0.003923779750335775,
+      "percentile_interval_95": [
+        -0.0031491653516582045,
+        0.010997421196736884
+      ]
+    },
+    "position_median_stored_units": {
+      "candidate_minus_reference": -0.0005144837327945434,
+      "percentile_interval_95": [
+        -0.0009413720049948767,
+        6.193672877847235e-05
+      ]
+    }
+  },
+  "limits": [
+    "Conditional on two already trained and validation-selected checkpoints.",
+    "Does not estimate variation across training seeds or correct exploratory selection.",
+    "Assumes independent events and uses one seed for the training comparison.",
+    "Not a reserved-test result or evidence of detector transfer."
+  ]
+}

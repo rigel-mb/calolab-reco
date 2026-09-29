@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "bundle_sha256": "0eaf1cfe15b4d4d9dadabcc047ddf0b4ac04e63450b63bca8b79800e051f8776",
+  "benchmark": {
+    "schema_version": 1,
+    "hardware": {
+      "device": "cuda",
+      "python": "3.12.3",
+      "platform": "Linux",
+      "machine": "x86_64",
+      "torch": "2.7.1+cu126",
+      "numpy": "2.5.3",
+      "cuda_runtime": "12.6",
+      "precision": "float32; TF32 disabled",
+      "attention_backend": "math",
+      "deterministic_algorithms": true,
+      "gpu_name": "Tesla T4",
+      "gpu_total_bytes": 15637086208,
+      "compute_capability": [
+        7,
+        5
+      ]
+    },
+    "provenance": {
+      "data_sha256": "b1bebafa0de4bf14dcd5b4accb2b261e9a00554c69828e02fd0636e372cacc2c",
+      "pilot_manifest_sha256": "86fa0401039467e0578cc87ab0b883cf6746cb6568d62263290ff693138fce81",
+      "config_sha256": "529ca31e1f97d1a37bfa448b8de1f750c1a7d353bd4daffc5a4ca0e8aa6818ed",
+      "prepared_manifest_sha256": "abac690f34e6292c4bf0f42af7b02bad3a6653c8dbddfbb71093e3e749a95a06",
+      "code_sha256": "d591cf8c653c3d18b5f82cd4d58b9725b2070a1cd0cd8c1b362d96e6604c7647"
+    },
+    "config": {
+      "seed": 20260923,
+      "microbatch_size": 32,
+      "effective_batch_size": 128,
+      "warmup_steps": 3,
+      "measured_steps": 12,
+      "resume_prefix_steps": 2,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "scheduler_steps": 100,
+      "projected_epochs": 20,
+      "max_phase_seconds": 240
+    },
+    "subset_count": 2048,
+    "full_train_count": 28118,
+    "mask_ratio": 0.5,
+    "workloads": [
+      {
+        "workload": "cnn",
+        "parameters": 45315,
+        "measured_updates": 12,
+        "seconds_per_update": [
+          0.027854934999993475,
+          0.02726591099997222,
+          0.026032831999998507,
+          0.02602291900001319,
+          0.025979930000005425,
+          0.025118459999987408,
+          0.025629654999988816,
+          0.025285508000024493,
+          0.02529855000000225,
+          0.025023336999993262,
+          0.06076279999996359,
+          0.02702013900000111
+        ],
+        "median_seconds": 0.026001424500009307,
+        "p95_seconds": 0.04266347424998,
+        "events_per_second_at_median": 4922.807210041672,
+        "peak_torch_allocated_bytes": 94727680,
+        "peak_torch_reserved_bytes": 117440512,
+        "projected_minutes_median": 1.9067711300006824,
+        "projected_minutes_p95": 3.1286547783318666
+      },
+      {
+        "workload": "transformer",
+        "parameters": 102403,
+        "measured_updates": 12,
+        "seconds_per_update": [
+          0.07904762599997639,
+          0.07976288100002193,
+          0.08015826799999104,
+          0.08337933600000724,
+          0.08070170199999893,
+          0.08120593299997836,
+          0.0928859999999645,
+          0.12647413400003416,
+          0.08960677900000746,
+          0.08248913399995672,
+          0.08123700699997016,
+          0.08243450899999516
+        ],
+        "median_seconds": 0.08183575799998266,
+        "p95_seconds": 0.10800066029999582,
+        "events_per_second_at_median": 1564.1084426691218,
+        "peak_torch_allocated_bytes": 149701632,
+        "peak_torch_reserved_bytes": 178257920,
+        "projected_minutes_median": 6.0012889199987285,
+        "projected_minutes_p95": 7.920048421999693
+      },
+      {
+        "workload": "masked_pretraining",
+        "parameters": 122297,
+        "measured_updates": 12,
+        "seconds_per_update": [
+          0.16211718000005249,
+          0.18346542699998736,
+          0.20688064299997677,
+          0.17554092300002822,
+          0.2778194269999972,
+          0.12340301099999351,
+          0.1277107390000083,
+          0.1266375539999558,
+          0.1261317160000317,
+          0.13002582599995094,
+          0.12007540599995536,
+          0.12248528399999259
+        ],
+        "median_seconds": 0.12886828249997961,
+        "p95_seconds": 0.2388030957999859,
+        "events_per_second_at_median": 993.2622482186046,
+        "peak_torch_allocated_bytes": 142257152,
+        "peak_torch_reserved_bytes": 165675008,
+        "projected_minutes_median": 9.450340716665172,
+        "projected_minutes_p95": 17.5122270253323
+      }
+    ],
+    "phase_wall_seconds": 12.929631527000026,
+    "accuracy_evaluated": false,
+    "test_used": false
+  },
+  "resume": {
+    "schema_version": 1,
+    "provenance": {
+      "data_sha256": "b1bebafa0de4bf14dcd5b4accb2b261e9a00554c69828e02fd0636e372cacc2c",
+      "pilot_manifest_sha256": "86fa0401039467e0578cc87ab0b883cf6746cb6568d62263290ff693138fce81",
+      "config_sha256": "529ca31e1f97d1a37bfa448b8de1f750c1a7d353bd4daffc5a4ca0e8aa6818ed",
+      "prepared_manifest_sha256": "abac690f34e6292c4bf0f42af7b02bad3a6653c8dbddfbb71093e3e749a95a06",
+      "code_sha256": "d591cf8c653c3d18b5f82cd4d58b9725b2070a1cd0cd8c1b362d96e6604c7647"
+    },
+    "device": "cuda",
+    "checks": [
+      {
+        "workload": "cnn",
+        "exact_replay": true,
+        "restored_step": 2,
+        "next_loss_finite": true
+      },
+      {
+        "workload": "transformer",
+        "exact_replay": true,
+        "restored_step": 2,
+        "next_loss_finite": true
+      },
+      {
+        "workload": "masked_pretraining",
+        "exact_replay": true,
+        "restored_step": 2,
+        "next_loss_finite": true
+      }
+    ],
+    "phase_wall_seconds": 3.2196666659999664,
+    "process_restart_checked": true,
+    "colab_vm_restart_checked": false
+  },
+  "storage_checks": {
+    "bundle_roundtrip_verified": true,
+    "checkpoint_roundtrip_verified": true,
+    "report_roundtrip_verified": true
+  }
+}

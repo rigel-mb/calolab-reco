@@ -1,0 +1,12 @@
+# Timing and restart check only. These updates are not accuracy experiments.
+seed = 20260923
+microbatch_size = 32
+effective_batch_size = 128
+warmup_steps = 3
+measured_steps = 12
+resume_prefix_steps = 2
+learning_rate = 0.0003
+weight_decay = 0.0001
+scheduler_steps = 100
+projected_epochs = 20
+max_phase_seconds = 240
