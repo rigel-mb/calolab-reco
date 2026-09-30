@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import importlib.util
 from pathlib import Path
 
@@ -72,3 +73,10 @@ def test_changed_evaluation_fails(tmp_path, change):
 def test_changed_provenance_fails(tmp_path, change):
     with pytest.raises(ValueError):
         check.compare(*pair(tmp_path, change))
+
+
+@pytest.mark.parametrize("limit", [0, 1025])
+def test_runner_rejects_invalid_limit_before_using_docker(limit):
+    # Exercise the actual orchestration entry, including its dependency resolution.
+    with pytest.raises(ValueError, match="validation limit"):
+        check.run_check(argparse.Namespace(limit=limit))

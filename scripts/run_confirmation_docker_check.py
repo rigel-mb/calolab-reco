@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import platform
+import shutil
 import subprocess
 import sys
 from datetime import UTC, datetime
@@ -19,6 +20,27 @@ from calolab_reco.pilot import configure
 PROJECT = transport.ROOT
 RTOL, ATOL = 1e-5, 1e-6
 
+
+def docker_cli(requested: str | None) -> str:
+    if requested is not None:
+        found = shutil.which(requested)
+        path = Path(requested).expanduser()
+        if found:
+            return found
+        if path.is_file():
+            return str(path.resolve())
+        raise FileNotFoundError("The requested Docker CLI was not found.")
+    if found := shutil.which("docker"):
+        return found
+    application_cli = Path("/Applications/Docker.app/Contents/Resources/bin/docker")
+    if platform.system() == "Darwin" and application_cli.is_file():
+        return str(application_cli)
+    raise FileNotFoundError("Docker CLI unavailable; start Docker Desktop or set --docker-cli.")
+
+
+def read_command_json(command: list[str]) -> dict | list:
+    result = subprocess.run(command, check=True, text=True, capture_output=True)
+    return json.loads(result.stdout)
 
 def evaluate(workspace, run, output, limit):
     """Use frozen preprocessing and selected weights, without any fitting."""
@@ -149,8 +171,6 @@ def compare(native, container):
 
 
 def run_check(args):
-    from run_docker_check import docker_cli, read_command_json
-
     if not 1 <= args.limit <= 1024:
         raise ValueError("The validation limit must be between 1 and 1024")
     bundle = args.bundle.expanduser().resolve(strict=True)
