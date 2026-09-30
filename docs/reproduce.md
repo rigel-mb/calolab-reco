@@ -23,10 +23,10 @@ Large data, model weights and per-event predictions are external. Set `CALOLAB_D
 | Read results or run synthetic CPU tests | None |
 | Execute the data-audit notebook | Prepared sample and manifest under the data root |
 | Reproduce the frozen GPU training | Original `calolab-reco-confirmation.zip` input bundle, containing train and validation only |
-| Docker prediction comparison | Original input bundle and extracted, verified training-result archive |
+| Docker prediction comparison | Data and six checkpoints from the release archive below |
 | Reproduce held-out inference | Original input/result archives, prepared data including test, and the existing evaluation freeze |
 
-The input bundle and trained checkpoints are not distributed through this Git repository. A clone alone therefore does not reproduce the scientific training or inference. These artifacts must be supplied separately and verified before execution; the data source and preparation conventions are in the [data audit](data_audit.md). Exact frozen-bundle reconstruction uses an earlier external methodology bundle, not just a fresh raw-data download.
+Data and weights stay outside Git. The downloadable Docker archive supplies the original train/validation input bundle and six selected checkpoints. The complete training-result export and reserved test are not included; reproducing the full held-out evaluation still requires those separate artifacts. Data provenance is documented in the [data audit](data_audit.md).
 
 For the commands below, `CONFIRMATION_BUNDLE` is the original input ZIP, `RETURNED_ZIP` is the completed training export, `RUN` is its extracted run directory, and `OUTPUT` is a new external output directory. Paths are shell variables to set to actual files, not files shipped in Git. The notebooks require input SHA256 `0e758bf20eda5cde456ff77ca218a396705437bff24cff63c718484e24509fe9`.
 
@@ -51,7 +51,7 @@ uv run --locked --extra cpu ruff check .
 uv run --locked --extra cpu pytest
 ```
 
-Tests use small synthetic examples to cover data boundaries, metrics, gradients, checkpoint recovery and evaluation consistency. They do not establish model superiority or run the full GPU experiments. The workflow in `.github/workflows/cpu.yml` runs CPU checks on pushes and pull requests, and validates notebook structure and code syntax without executing scientific notebooks. Remote CI execution is not yet demonstrated for this repository.
+Tests use small synthetic examples to cover data boundaries, metrics, gradients, checkpoint recovery and evaluation consistency. They do not establish model superiority or run the full GPU experiments. The workflow in `.github/workflows/cpu.yml` runs CPU checks on pushes and pull requests, and validates notebook structure and code syntax without executing scientific notebooks.
 
 ## Optional GPU training
 
@@ -89,15 +89,27 @@ Use an external output directory for regenerated reports and review differences 
 
 ## Docker CPU evaluation
 
-Start an available Docker engine. The selected comparison uses the same 256 validation events and all six model/task variants from the primary training seed:
+Start an available Docker engine after the installation above. Download [calolab-reco-docker-demo.zip](https://github.com/rigel-mb/calolab-reco/releases/download/v0.1.0/calolab-reco-docker-demo.zip) (36.2 MB) and keep its contents outside the repository. The archive supplies the unchanged original train/validation bundle, six primary-seed checkpoints and their provenance. It includes more data than the check uses so that the original input fingerprints remain valid; reserved-test data are excluded.
+
+From the repository root, download and extract it, then run the existing comparison command:
 
 ```bash
+DEMO_DIR="$HOME/Data/cache/calolab-reco/docker-demo"
+mkdir -p "$DEMO_DIR"
+curl --fail --location \
+  https://github.com/rigel-mb/calolab-reco/releases/download/v0.1.0/calolab-reco-docker-demo.zip \
+  --output "$DEMO_DIR/calolab-reco-docker-demo.zip"
+unzip -n "$DEMO_DIR/calolab-reco-docker-demo.zip" -d "$DEMO_DIR"
+
+CONFIRMATION_BUNDLE="$DEMO_DIR/calolab-reco-docker-demo/calolab-reco-confirmation.zip"
+RUN="$DEMO_DIR/calolab-reco-docker-demo/run"
+OUTPUT="$DEMO_DIR/comparison-$(date +%Y%m%d-%H%M%S)"
 uv run --locked --extra cpu python scripts/run_confirmation_docker_check.py \
   --bundle "$CONFIRMATION_BUNDLE" --run "$RUN" --output "$OUTPUT" \
   --limit 256 --build --report "$OUTPUT/docker_check.json"
 ```
 
-The script builds the existing Dockerfile and supplies the selected evaluator explicitly. No training occurs. Inputs and checkpoints are read-only; the container uses two CPUs, 2 GiB memory and no network during evaluation. The [recorded comparison](../reports/final/docker_check.json) passed on native macOS ARM64 and Linux ARM64, with exact IDs/targets and prediction/metric tolerances `rtol=1e-5`, `atol=1e-6`. Windows/WSL and Linux AMD64 have not yet been verified. This checks bounded numerical portability, not scientific accuracy.
+The expected result is `comparison_passed: true`, `cases: 6`, `count: 256`; details are saved in `$OUTPUT/docker_check.json`. The script verifies input/checkpoint fingerprints, builds the existing Dockerfile and compares native and container predictions on the same 256 validation events. No training occurs. Inputs and checkpoints are read-only; the container uses two CPUs, 2 GiB memory and no network during evaluation. The [recorded comparison](../reports/final/docker_check.json) passed on native macOS ARM64 and Linux ARM64, with exact IDs/targets and prediction/metric tolerances `rtol=1e-5`, `atol=1e-6`. Windows/WSL and Linux AMD64 have not yet been verified. This checks bounded numerical portability, not the full held-out results.
 
 ## Reproduce the fixed final evaluation
 

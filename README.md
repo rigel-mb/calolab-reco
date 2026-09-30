@@ -12,7 +12,7 @@ Reconstruct a photon's energy and impact position from simulated calorimeter cry
 | [2. Methods and decisions](notebooks/02_methods_and_decisions.ipynb) | What failed initially, which experiments changed the approach, and why the final method was selected |
 | [3. Final results](notebooks/04_final_results.ipynb) | Accuracy, the benefit and cost of pretraining, and physical limitations |
 
-For the written rationale, see the [decision record](docs/decisions.md). Installation, tests, Docker and optional GPU training are grouped in [Reproduce the study](docs/reproduce.md).
+For the written rationale, see the [decision record](docs/decisions.md). Installation, tests, Docker and optional GPU training are grouped in [Reproduce the study](docs/reproduce.md). The Docker section provides a downloadable archive with the required data and checkpoints.
 
 ## Approach
 
