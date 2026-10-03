@@ -34,4 +34,6 @@ Added noise models imperfect readout. The 50 MeV cut suppresses some measurement
 
 The window can select the wrong maximum: ten of 5,947 validation events failed badly in the primary exploratory noise draw, all around 1 GeV. The final primary test draw has seven distant maximum selections among 5,935 events, between 1.059 and 1.300 GeV. They remain in all scores and tail reports; no post-test energy cut is introduced. The few padded windows do not establish general robustness at physical detector edges.
 
+A future comparison could select the 7 x 7 window with the largest summed measured energy instead of centering on the largest crystal. This may favor a distributed shower over an isolated noise peak, but accumulated noise and boundary effects require checks. It has not been tested here and would require new training/validation comparisons, not tuning on the opened test.
+
 Sources: [DeepCluster, section 3.2](https://link.springer.com/article/10.1140/epjc/s10052-024-12978-1) and [ClusTEX, sections 3.4-3.5](https://arxiv.org/html/2603.18172v2#S3.SS4). Their full candidate-building and reference algorithms are more elaborate than this bounded, one-photon study.

@@ -2,6 +2,10 @@
 
 Reconstruct a photon's energy and impact position from simulated calorimeter crystals. Compare small CNNs and Transformers, then test whether one masked-pretrained encoder helps when fine-tuned separately for the two tasks.
 
+![From an incident photon to crystal deposits and reconstruction](docs/figures/photon_shower.png)
+
+Schematic illustration with fictitious deposit values. Each grid value integrates the energy deposited in one crystal; the stored grid does not resolve shower depth.
+
 **Main finding:** pretraining improves typical position accuracy under the assumed noisy measurement conditions, but does not reduce the rare large errors or improve position RMSE against the reference. Energy gains depend on the metric, and a strong classical calibration remains better on average.
 
 ## Explore the study
@@ -60,7 +64,7 @@ This is an independent study on simulated detector deposits, not measurements fr
 
 ## Possible next steps
 
-1. **Select the observed region more reliably.** Compare several candidate windows or an adaptive window, with a full-grid fallback when localization is uncertain. Prioritize the low-energy cases where noise can move the maximum away from the shower, and measure large-error counts as well as typical accuracy.
+1. **Select the observed region more reliably.** Compare maximum-crystal seeding with the 7 x 7 window of maximum summed measured energy, checking noise accumulation and boundary effects. Also consider candidate or adaptive windows and a full-grid fallback. Prioritize weak showers and measure large errors as well as typical accuracy.
 2. **Strengthen detector realism.** Validate the noise and threshold assumptions against detector documentation and, ideally, calorimetry expertise. The current simplified response is not a validated model of the full CMS readout.
 3. **Compare reconstruction formulations fairly.** Compare full-grid inputs, local windows and learned corrections to a physical reference with matched information and comparable training/tuning budgets. Separate representation effects from architecture changes wherever possible.
 4. **Consolidate model comparisons.** Explore architecture and hyperparameter choices within a declared budget, then repeat with more independent training seeds.

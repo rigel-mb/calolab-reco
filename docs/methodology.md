@@ -28,6 +28,14 @@ Divide deposits by one train-only scale: the 95th percentile of the maximum clea
 | Optimization | AdamW, learning rate 3e-4, weight decay 1e-4; cosine schedule; 4,400 updates; effective batch 128, microbatch 32 |
 | Selection | Lowest validation energy MARE or position median, evaluated every 220 updates; earlier checkpoint wins ties |
 
+![Local CNN: four input channels, convolutions, 64-value representation and task prediction](figures/cnn_architecture.png)
+
+Schematic of the selected CNN. Four channels describe each cell; the convolutions operate over the two spatial dimensions. The 64-value representation is joined to the observed anchor before the task head.
+
+![Local Transformer: 49 cell tokens, 64-value embeddings, attention blocks and task prediction](figures/transformer_architecture.png)
+
+Schematic of the selected Transformer. Each crystal is a token with four input values; attention exchanges information across 49 tokens before mean pooling. Energy and position use independent downstream models with this same architecture.
+
 The unused task head remains allocated for exact architecture continuity but receives no task gradient. Report allocated and active parameters separately. No physical calibration output enters a neural prediction.
 
 The energy objective gives a comparable penalty to comparable fractional errors across energies. Huber limits the influence of very large errors. The factor 0.1 sets its transition at a 10% relative error; it is not a measured detector resolution. For position the transition is one stored coordinate unit. These fixed scales were carried forward from the exploratory specialist studies, not newly tuned.
